@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#74203f">
+  <meta name="description" content="لعبة تفاعلية للتهيئة لدرس الأفعال الخمسة في ثلاث محطات ممتعة، بصفحة واحدة ورابط واحد.">
+  <title>فعل واحد... خمس صور! | تحدّي الأفعال الخمسة</title>
+  <style>
+    :root{--ink:#3b2131;--wine:#711e40;--wine-dark:#56132f;--teal:#1b7f87;--teal-dark:#13636b;--orange:#bc5933;--gold:#d7a947;--bg:#fffaf6;--pink:#f5e6ea;--pale-blue:#e9f5f5;--pale-peach:#fff0e7;--line:#eee1df;--white:#fff;--shadow:0 12px 30px #66344918;--radius:24px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font:500 17px/1.85 Tahoma,Arial,sans-serif;background:var(--bg);min-height:100vh}
+    body::before{content:"";position:fixed;z-index:-1;inset:0;opacity:.36;background-image:linear-gradient(45deg,transparent 46%,#e8dbd7 47%,#e8dbd7 48%,transparent 49%),linear-gradient(-45deg,transparent 46%,#e8dbd7 47%,#e8dbd7 48%,transparent 49%);background-size:120px 120px;pointer-events:none}
+    button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #eba450;outline-offset:3px}
+    .shell{max-width:1100px;margin:auto;padding:24px 18px 45px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}.brand{font-size:15px;font-weight:800;color:var(--wine)}.tag{display:inline-flex;align-items:center;gap:8px;border-radius:50px;padding:6px 17px;background:var(--pink);color:var(--wine);font-weight:800;font-size:15px}.timer{display:flex;align-items:center;gap:10px;padding:7px 15px;background:white;border-radius:50px;border:1px solid var(--line);box-shadow:0 2px 12px #0000000a;color:var(--teal);font-weight:900;font-variant-numeric:tabular-nums}.timer.alert{color:#a93732;background:#fff2ee}.timer .clock{font-size:22px}
+    .hero{position:relative;overflow:hidden;text-align:center;border-radius:34px;padding:34px 22px 30px;background:linear-gradient(135deg,var(--wine),#903253);box-shadow:var(--shadow);color:white}.hero::before,.hero::after{content:"✦";position:absolute;font-size:80px;color:#f9cf6e;opacity:.45;top:-30px;transform:rotate(16deg)}.hero::before{right:5%}.hero::after{left:5%}.hero .overline{font-size:14px;letter-spacing:.3px;opacity:.9;margin-bottom:5px;font-weight:700}.hero h1{font-size:clamp(28px,5vw,49px);line-height:1.35;margin:0 0 8px;font-weight:900}.hero p{margin:0;color:#ffedf4;font-size:clamp(14px,2vw,18px)}.hero .hero-spark{position:absolute;top:22px;left:18%;font-size:28px;opacity:.9}
+    .status{margin:24px 0 17px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}.progress-label{font-size:14px;font-weight:800;color:var(--wine)}.stars{display:flex;align-items:center;gap:5px;font-weight:800;color:#976d19}.stars .symbol{font-size:23px;color:#d9ccbe}.stars .symbol.done{color:#efbc50;text-shadow:0 1px 3px #dda13b60}.progress-track{height:10px;border-radius:30px;background:#f0e4e4;overflow:hidden;margin-bottom:19px}.progress-fill{width:0;height:100%;border-radius:30px;background:linear-gradient(90deg,var(--teal),#5cb9a0);transition:width .5s ease}
+    .stepper{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}.step{display:flex;align-items:center;text-align:right;gap:12px;padding:12px 14px;border:1px solid #ecdde0;border-radius:19px;background:#fff;box-shadow:0 4px 11px #49243b0a;transition:transform .2s,border-color .2s}.step:hover{transform:translateY(-2px)}.step[aria-current="step"]{border:2px solid var(--wine);background:#fff5f8}.step:disabled{opacity:1;cursor:default}.step:disabled:hover{transform:none}.step-num{display:grid;place-items:center;min-width:38px;height:38px;border-radius:14px;color:white;background:var(--wine);font-weight:900}.step[data-i="2"] .step-num{background:var(--teal)}.step[data-i="3"] .step-num{background:var(--orange)}.step h3{margin:0;font-size:16px;line-height:1.5}.step p{margin:0;font-size:12px;color:#83717b;font-weight:500}
+    .panel{display:none;animation:pop .4s both}.panel.active{display:block}@keyframes pop{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .card{background:white;border-radius:27px;box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden}.card-top{display:flex;align-items:center;gap:15px;padding:18px 22px;color:white;font-size:20px;font-weight:900}.card-top.wine{background:var(--wine)}.card-top.teal{background:var(--teal)}.card-top.orange{background:var(--orange)}.card-top .emoji{font-size:31px}.card-top small{display:block;font-weight:500;font-size:14px;opacity:.9;line-height:1.5}.card-body{padding:26px}.intro{text-align:center;padding:29px 24px 36px}.intro h2,.ending h2{font-size:clamp(24px,4vw,31px);color:var(--wine);margin:5px auto 9px}.intro p{max-width:660px;margin:0 auto 23px;color:#66515b}.intro-art{font-size:69px;line-height:1.2;margin-bottom:9px}.intro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px auto;max-width:780px}.intro-mini{border-radius:19px;padding:16px 10px;background:var(--pink);font-size:15px;font-weight:900}.intro-mini:nth-child(2){background:var(--pale-blue)}.intro-mini:nth-child(3){background:var(--pale-peach)}.intro-mini span{display:block;font-size:26px}
+    .scene{text-align:center;background:var(--pink);padding:22px 13px;border-radius:24px;color:var(--wine);font-size:clamp(22px,4vw,31px);font-weight:900;margin-bottom:23px}.question{font-weight:900;font-size:21px;margin:6px 0 17px}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.choice{border-radius:17px;border:2px solid #e7dbdd;background:#fffdfc;color:var(--ink);text-align:right;padding:15px 18px;display:flex;align-items:center;gap:12px;min-height:74px;transition:background .2s,border-color .2s,transform .2s}.choice:hover{border-color:#d8a2b4;transform:translateY(-2px)}.choice .letter{display:grid;place-items:center;width:35px;height:35px;flex:0 0 35px;border-radius:11px;background:#f8eaef;color:var(--wine);font-weight:900}.choice.selected{border-color:var(--wine);background:#fff4f8}.choice.correct{border-color:#3c9989;background:#ecfbf6}.choice.incorrect{border-color:#d86754;background:#fff0ed}.choice.correct .letter{background:#bde8d9}.choice.incorrect .letter{background:#f8c9c0}
+    .feedback{display:none;border-radius:16px;padding:12px 16px;margin-top:17px;font-size:15px;font-weight:800}.feedback.show{display:block}.feedback.good{background:#e6f7ed;color:#146846}.feedback.bad{background:#fff0e7;color:#8b3a25}.feedback.neutral{background:#f1f6f7;color:#225c62}
+    .actions{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-top:24px}.btn{border:0;border-radius:15px;background:var(--wine);color:white;font-weight:900;padding:13px 23px;box-shadow:0 5px 13px #581e3a20;transition:transform .2s,filter .2s}.btn:hover:not(:disabled){filter:brightness(1.06);transform:translateY(-2px)}.btn.teal{background:var(--teal)}.btn.orange{background:var(--orange)}.btn.ghost{background:#f7f0f1;color:var(--wine);box-shadow:none}.hint{color:#7b6870;font-size:13px}
+    .task-head{background:var(--pale-blue);padding:16px 22px;border-radius:19px;margin-bottom:20px}.task-head p{margin:0}.forms{display:grid;gap:12px}.form-row{display:grid;grid-template-columns:minmax(120px,180px) 1fr auto;gap:12px;align-items:center;background:#fffafa;border:1px solid #f0e5e5;border-radius:17px;padding:12px 15px}.pronoun{font-size:19px;font-weight:900;color:var(--wine)}.fill{width:100%;min-width:0;border:1px solid #d9cecd;border-radius:11px;padding:10px 13px;background:white;color:var(--ink);text-align:center;font-weight:800;font-size:18px}.row-suffix{color:#6b5760;font-weight:800}.ans-key{display:none;color:#297f6f;font-size:14px;font-weight:900}.form-row.revealed .ans-key{display:block;grid-column:2/4}.form-row.is-correct{background:#effbf6;border-color:#a7dac8}.form-row.is-wrong{background:#fff7f2;border-color:#ebd3c3}.group-note{margin:20px 0 8px;font-weight:900;color:var(--wine)}textarea{display:block;resize:vertical;width:100%;min-height:105px;padding:15px 17px;border:1.5px solid #d9cbcc;border-radius:16px;background:#fffefe;color:var(--ink);line-height:1.9}.explain{font-size:13px;color:#755f68;margin:7px 0 0}
+    .reflection-grid{display:grid;grid-template-columns:1fr;gap:16px}.reflection{background:#fffaf8;border:1px solid #f1e2df;border-radius:20px;padding:18px}.reflection h3{color:var(--wine);font-size:17px;margin:0 0 11px;display:flex;gap:9px;align-items:center}.reflection h3 .bubble{width:31px;height:31px;border-radius:11px;display:grid;place-items:center;background:var(--pale-peach);color:var(--orange)}.models{display:none;border:1px solid #add5d1;background:#eef9f8;border-radius:15px;padding:15px 18px;margin-top:16px}.models.show{display:block}.models h3{font-size:16px;color:var(--teal-dark);margin:0 0 7px}.models p{margin:5px 0}.subtitle-box{background:#fbecf1;border-radius:19px;padding:18px;margin-top:23px}.subtitle-box label{display:block;font-weight:900;color:var(--wine);margin-bottom:10px}.subtitle-box input{background:white;border:1px solid #dfc6d0;border-radius:12px;padding:10px 14px;width:100%;max-width:500px}
+    .ending{text-align:center;padding:30px 20px 35px}.ending .trophy{font-size:70px;line-height:1.3}.reveal{background:var(--pink);padding:17px 18px;border-radius:17px;margin:14px auto;max-width:590px}.reveal strong{font-size:clamp(24px,5vw,36px);color:var(--wine)}.ending p{max-width:690px;margin:14px auto;color:#685963}.ending .actions{justify-content:center}.summary-tip{background:var(--pale-blue);border-radius:12px;margin:20px auto 0;padding:10px;max-width:670px;font-size:13px;color:#245e63}
+    footer{text-align:center;margin:23px auto 0;color:#776a70;font-size:12px;max-width:800px}.toast{position:fixed;z-index:10;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--wine-dark);color:white;border-radius:16px;padding:12px 22px;box-shadow:var(--shadow);opacity:0;transition:transform .3s,opacity .3s;max-width:90vw;text-align:center;pointer-events:none}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.confetti{position:fixed;pointer-events:none;z-index:8;width:8px;height:13px;animation:fall .9s ease-out forwards}@keyframes fall{to{transform:translate(var(--x),var(--y)) rotate(430deg);opacity:0}}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:680px){body{font-size:15px}.shell{padding:14px 12px 28px}.hero{padding:26px 10px}.status{margin:18px 0 12px}.stepper{gap:6px}.step{padding:9px 6px;justify-content:center;flex-wrap:wrap;text-align:center;gap:3px}.step h3{font-size:12px}.step p{font-size:10px}.step-num{min-width:30px;height:30px;border-radius:10px}.card-body{padding:18px 13px}.card-top{padding:15px 16px;font-size:18px}.choices{grid-template-columns:1fr}.form-row{grid-template-columns:minmax(85px,110px) 1fr;gap:6px;padding:10px}.row-suffix{grid-column:2;text-align:center;font-size:12px}.form-row.revealed .ans-key{grid-column:1/3}.intro-grid{gap:6px}.intro-mini{font-size:12px;padding:10px 5px}.intro-mini span{font-size:22px}.actions{justify-content:center}.btn{padding:12px 17px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+    @media print{body{background:white}.topbar,.hero,.status,.progress-track,.stepper,footer,.actions,.toast{display:none!important}.shell{max-width:none;padding:0}.panel,.card{display:none!important}#finish.panel{display:block!important}#finish .card{display:block!important;border:0;box-shadow:none}#print-answers{display:block!important}.reveal{background:none}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <div class="brand"><span aria-hidden="true">✦</span> تهيئة تفاعلية | اللغة العربية</div>
+    <div class="tag">🎯 ثلاث محطات • رابط واحد</div>
+    <div class="timer" id="timerBox" aria-live="off"><span class="clock" aria-hidden="true">⏰</span><span id="clock">٠٤:٠٠</span><span class="sr-only">الوقت المتبقي</span></div>
+  </div>
+  <header class="hero">
+    <span class="hero-spark" aria-hidden="true">✨</span>
+    <div class="overline">مَهَمّةُ الْيَوْمِ</div>
+    <h1>فعلٌ واحدٌ... خمسُ صور!</h1>
+    <p>تذكّري، ناقشي زميلتك، واكتشفي السرّ اللغوي!</p>
+  </header>
+  <div class="status">
+    <span class="progress-label" id="progressLabel">جاهزة للانطلاق؟</span>
+    <div class="stars" aria-label="نجوم الإنجاز"><span>نجومك:</span><span class="symbol" id="star1">★</span><span class="symbol" id="star2">★</span><span class="symbol" id="star3">★</span></div>
+  </div>
+  <div class="progress-track" aria-label="تقدم التحدّي"><div class="progress-fill" id="progressFill"></div></div>
+  <nav class="stepper" aria-label="مراحل التحدّي">
+    <button type="button" class="step" data-i="1" id="nav1" disabled><span class="step-num">١</span><span><h3>تذكّري</h3><p>اختيار من متعدد</p></span></button>
+    <button type="button" class="step" data-i="2" id="nav2" disabled><span class="step-num">٢</span><span><h3>فكّري مع زميلتك</h3><p>إجابات كتابية</p></span></button>
+    <button type="button" class="step" data-i="3" id="nav3" disabled><span class="step-num">٣</span><span><h3>اكتشفي</h3><p>تأمّل واستنتاج</p></span></button>
+  </nav>
+
+  <main>
+    <section class="panel active" id="welcome" aria-label="بدء اللعبة">
+      <div class="card intro">
+        <div class="intro-art" aria-hidden="true">👩🏻‍🎓 💡 👩🏽‍🎓</div>
+        <h2>هل أنتِ مستعدة لكشف اللغز؟</h2>
+        <p>أمامك ثلاث محطات في مغامرة لغوية قصيرة. يمكنكِ الانتقال إلى المحطة التالية حتى دون الإجابة، وتُمنحكِ النجوم عند إنجاز التحدّيات. اكتشفي عنوان الدرس مع زميلتك!</p>
+        <div class="intro-grid">
+          <div class="intro-mini"><span>🧠</span>اختاري الإجابة</div>
+          <div class="intro-mini"><span>✍️</span>اكتبي مع زميلتك</div>
+          <div class="intro-mini"><span>🔎</span>استنتجي واكتشفي</div>
+        </div>
+        <button class="btn" id="startBtn">🚀 ابدئي التحدّي</button>
+      </div>
+    </section>
+
+    <section class="panel" id="stage1" aria-label="المحطة الأولى تذكّري">
+      <article class="card">
+        <div class="card-top wine"><span class="emoji" aria-hidden="true">🧠</span><span>المحطة الأولى: تذكّري<small>تحدّي الاختيار الذكي • نجمة أولى ⭐</small></span></div>
+        <div class="card-body">
+          <div class="scene">تَكْتُبُ الطَّالِبَةُ قِصَّةً.</div>
+          <h2 class="question">ما نوع الفعل «تكتب»؟</h2>
+          <div class="choices" id="choices" role="group" aria-label="خيارات السؤال الأول">
+            <button type="button" class="choice" data-answer="ماض"><span class="letter">أ</span>فعل ماضٍ</button>
+            <button type="button" class="choice" data-answer="مضارع"><span class="letter">ب</span>فعل مضارع</button>
+            <button type="button" class="choice" data-answer="أمر"><span class="letter">ج</span>فعل أمر</button>
+            <button type="button" class="choice" data-answer="اسم"><span class="letter">د</span>اسم فاعل</button>
+          </div>
+          <div id="feedback1" class="feedback" role="status" aria-live="polite"></div>
+          <div class="actions"><span class="hint">💡 الإجابة اختيارية، ويمكنكِ الانتقال مباشرةً إلى المحطة التالية.</span><button id="next1" class="btn teal">إلى المحطة الثانية ←</button></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel" id="stage2" aria-label="المحطة الثانية فكّري مع زميلتك">
+      <article class="card">
+        <div class="card-top teal"><span class="emoji" aria-hidden="true">🤝</span><span>المحطة الثانية: فكّري مع زميلتك<small>مختبر الأفعال • اكتبي الإجابات بنفسك</small></span></div>
+        <div class="card-body">
+          <div class="task-head"><p><strong>المهمة:</strong> أكملي بالفعل المضارع المناسب من الفعل «كتب». تشاوري مع زميلتك، ثم اكتبي صيغة الفعل في كل خانة.</p></div>
+          <div class="forms" id="forms">
+            <label class="form-row" data-correct="يكتبان"><span class="pronoun">هما (المذكّر)</span><input class="fill" type="text" aria-label="صيغة الفعل مع هما المذكّر" autocomplete="off" placeholder="اكتبي الفعل..."><span class="row-suffix">الدَّرسَ.</span><span class="ans-key"></span></label>
+            <label class="form-row" data-correct="تكتبان"><span class="pronoun">أنتما</span><input class="fill" type="text" aria-label="صيغة الفعل مع أنتما" autocomplete="off" placeholder="اكتبي الفعل..."><span class="row-suffix">الدَّرسَ.</span><span class="ans-key"></span></label>
+            <label class="form-row" data-correct="يكتبون"><span class="pronoun">هم</span><input class="fill" type="text" aria-label="صيغة الفعل مع هم" autocomplete="off" placeholder="اكتبي الفعل..."><span class="row-suffix">الدَّرسَ.</span><span class="ans-key"></span></label>
+            <label class="form-row" data-correct="تكتبون"><span class="pronoun">أنتم</span><input class="fill" type="text" aria-label="صيغة الفعل مع أنتم" autocomplete="off" placeholder="اكتبي الفعل..."><span class="row-suffix">الدَّرسَ.</span><span class="ans-key"></span></label>
+            <label class="form-row" data-correct="تكتبين"><span class="pronoun">أنتِ</span><input class="fill" type="text" aria-label="صيغة الفعل مع أنتِ" autocomplete="off" placeholder="اكتبي الفعل..."><span class="row-suffix">الدَّرسَ.</span><span class="ans-key"></span></label>
+          </div>
+          <div class="group-note">💬 كيف ساعدكما الضمير على اختيار صيغة الفعل؟</div>
+          <textarea id="explain2" placeholder="اكتبا تفسيركما هنا..." aria-label="تفسير كيفية اختيار صيغ الأفعال"></textarea>
+          <p class="explain">سؤال التفكير هذا مفتوح، ولن يُصحَّح آليًّا.</p>
+          <div class="feedback" id="feedback2" role="status" aria-live="polite"></div>
+          <div class="actions"><button type="button" class="btn ghost" id="back2">العودة للسؤال الأول</button><button type="button" class="btn teal" id="check2">🔍 تحقّقي من الصيغ</button><button type="button" class="btn" id="next2">إلى محطة الاكتشاف ←</button></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel" id="stage3" aria-label="المحطة الثالثة اكتشفي">
+      <article class="card">
+        <div class="card-top orange"><span class="emoji" aria-hidden="true">🔎</span><span>المحطة الثالثة: اكتشفي<small>مهمة المحقّقة اللغوية • ناقشي واكتبي</small></span></div>
+        <div class="card-body">
+          <div class="task-head" style="background:var(--pale-peach)"><p>بعد أن شاهدتِ الصور الخمس للفعل، ناقشي زميلتك واكتبي استنتاجاتكما. هنا لا توجد خيارات جاهزة، والإجابة اختيارية ويمكن الانتقال مباشرةً للكشف عن عنوان الدرس!</p></div>
+          <div class="reflection-grid">
+            <div class="reflection"><h3><span class="bubble">١</span>ما الذي تغيّر في الفعل؟</h3><textarea class="essay" id="essay1" placeholder="ألاحظ أن..." aria-label="الإجابة عن ما الذي تغيّر في الفعل"></textarea></div>
+            <div class="reflection"><h3><span class="bubble">٢</span>ما الحرف المشترك في نهاية الأفعال؟</h3><textarea class="essay" id="essay2" placeholder="الحرف المشترك هو..." aria-label="الإجابة عن الحرف المشترك"></textarea></div>
+            <div class="reflection"><h3><span class="bubble">٣</span>كم صورة حصلنا عليها؟</h3><textarea class="essay" id="essay3" placeholder="حصلنا على..." aria-label="الإجابة عن عدد الصور"></textarea></div>
+          </div>
+          <div class="subtitle-box"><label for="lessonGuess">🎯 توقّعي عنوان درس اليوم!</label><input id="lessonGuess" type="text" autocomplete="off" placeholder="اكتبي توقّعك هنا..."></div>
+          <div id="models" class="models" aria-live="polite"><h3>💡 إجابات مقترحة للمناقشة الصفّية</h3><p><strong>١.</strong> تغيّرت صيغة الفعل بحسب الضمير، فاتصلت به ألف الاثنين أو واو الجماعة أو ياء المخاطبة، مع اختلاف حرف المضارعة.</p><p><strong>٢.</strong> حرف النون.</p><p><strong>٣.</strong> خمس صور.</p><p class="explain">الإجابات الكتابية تحتاج إلى مراجعة المعلمة أو مناقشتها؛ هذه أمثلة وليست تصحيحًا آليًّا.</p></div>
+          <div class="feedback" id="feedback3" role="status" aria-live="polite"></div>
+          <div class="actions"><button type="button" class="btn ghost" id="back3">العودة للمحطة الثانية</button><button type="button" class="btn orange" id="modelsBtn">💡 عرض إجابات مقترحة</button><button type="button" class="btn" id="finishBtn">🏆 اكتشفي عنوان الدرس</button></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel" id="finish" aria-label="إنجاز التحدّي">
+      <div class="card ending">
+        <div class="trophy" aria-hidden="true">🏆✨</div>
+        <h2>أحسنتِ أيتها المحقّقة اللغوية!</h2>
+        <p>وصلتِ إلى نهاية المغامرة! يمكنكِ العودة للإجابة عن أي سؤال، أو اكتشاف السرّ اللغوي الآن.</p>
+        <div class="reveal"><span>عنوان درس اليوم هو:</span><br><strong>الأفعال الخمسة</strong></div>
+        <p id="guessResult"></p>
+        <p>هي أفعال مضارعة اتصلت بها <strong>ألف الاثنين</strong> أو <strong>واو الجماعة</strong> أو <strong>ياء المخاطبة</strong>، وتأتي في خمس صيغ.</p>
+        <div class="actions"><button class="btn ghost" id="reviewBtn">↩ مراجعة إجاباتي</button><button class="btn teal" id="copyBtn">📋 نسخ إجاباتي</button><button class="btn orange" id="downloadBtn">⬇ تنزيل إجاباتي</button><button class="btn ghost" id="restartBtn">🔄 تحدٍّ جديد</button></div>
+        <div class="summary-tip">🔒 لا تُرسَل الإجابات تلقائيًّا إلى المعلمة؛ يمكنكِ نسخها أو تنزيلها ومشاركتها معها. صفحة GitHub Pages ثابتة ولا تجمع الإجابات في قاعدة بيانات.</div>
+        <div id="print-answers" style="display:none;text-align:right;margin-top:30px;white-space:pre-wrap"></div>
+      </div>
+    </section>
+  </main>
+  <footer>لعبة تعليمية بملف HTML واحد، مناسبة للنشر على GitHub Pages وللوصول عبر رمز QR واحد.</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(()=>{
+  'use strict';
+  const ids=id=>document.getElementById(id);
+  let current='welcome', started=false, left=240, timerId=null, notifiedTime=false;
+  const done=[false,false,false];
+  const stageIds=['welcome','stage1','stage2','stage3','finish'];
+  const arabicDigits=n=>String(n).replace(/\d/g,x=>'٠١٢٣٤٥٦٧٨٩'[Number(x)]);
+  const strip=s=>(s||'').replace(/[\u064b-\u065f\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/\s+/g,'').trim();
+  const getFields=()=>Array.from(document.querySelectorAll('.form-row'));
+  function toast(msg){const el=ids('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast._id);toast._id=setTimeout(()=>el.classList.remove('show'),3000)}
+  function confetti(){if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return; const colors=['#e9a944','#1b7f87','#ba5f37','#711e40','#eb9cb1'];for(let i=0;i<22;i++){const el=document.createElement('span');el.className='confetti';el.style.background=colors[i%colors.length];el.style.left=(30+Math.random()*40)+'vw';el.style.top=(25+Math.random()*23)+'vh';el.style.setProperty('--x',(-150+Math.random()*300)+'px');el.style.setProperty('--y',(140+Math.random()*250)+'px');document.body.appendChild(el);setTimeout(()=>el.remove(),1050)}}
+  function update(){const count=done.filter(Boolean).length;ids('progressFill').style.width=(count/3*100)+'%';ids('progressLabel').textContent=started?`أكملتِ ${arabicDigits(count)} من ٣ محطات`:'جاهزة للانطلاق؟';done.forEach((b,i)=>ids('star'+(i+1)).classList.toggle('done',b));}
+  function go(name){current=name;for(const id of stageIds){const e=ids(id);e.classList.toggle('active',id===name)};[1,2,3].forEach(i=>{const nav=ids('nav'+i);const active=name==='stage'+i;nav.setAttribute('aria-current',active?'step':'false');nav.disabled=!started});window.scrollTo({top:0,behavior:'smooth'});}
+  function timeTick(){left=Math.max(0,left-1);ids('clock').textContent=arabicDigits(`${String(Math.floor(left/60)).padStart(2,'0')}:${String(left%60).padStart(2,'0')}`);if(left===0){clearInterval(timerId);ids('timerBox').classList.add('alert');if(!notifiedTime){notifiedTime=true;toast('⏰ انتهت الأربع دقائق، ويمكنك إكمال المحطات دون انقطاع.') }}}
+  ids('startBtn').addEventListener('click',()=>{started=true;go('stage1');update();if(!timerId)timerId=setInterval(timeTick,1000)});
+  [1,2,3].forEach(i=>ids('nav'+i).addEventListener('click',()=>{if(started)go('stage'+i)}));
+  document.querySelectorAll('.choice').forEach(choice=>choice.addEventListener('click',()=>{
+    const correct=choice.dataset.answer==='مضارع';
+    document.querySelectorAll('.choice').forEach(el=>{el.classList.remove('selected','correct','incorrect');el.setAttribute('aria-pressed','false')});
+    choice.classList.add('selected',correct?'correct':'incorrect');choice.setAttribute('aria-pressed','true');
+    const feedback=ids('feedback1');feedback.className='feedback show '+(correct?'good':'bad');feedback.textContent=correct?'🎉 رائع! «تكتب» فعل مضارع يدلّ على حدوث الفعل في الزمن الحاضر أو المستقبل.':'🌱 محاولة جميلة! فكّري: هل يدل «تكتب» على حدث وقع، أم يحدث الآن؟ ثم اختاري مجددًا.';
+    
+    if(correct&&!done[0]){done[0]=true;confetti();update()}
+  }));
+  ids('next1').addEventListener('click',()=>go('stage2'));
+  ids('back2').addEventListener('click',()=>go('stage1'));
+  ids('back3').addEventListener('click',()=>go('stage2'));
+  getFields().forEach(row=>row.querySelector('input').addEventListener('input',()=>{row.classList.remove('is-correct','is-wrong','revealed');const f=ids('feedback2');f.className='feedback';}));
+  ids('check2').addEventListener('click',()=>{
+    const rows=getFields();const blanks=rows.some(row=>!row.querySelector('input').value.trim());if(blanks){toast('✍️ أكملي الصيغ الخمس أولًا ثم تحقّقي منها.');return}
+    let correctCount=0;
+    rows.forEach(row=>{const value=strip(row.querySelector('input').value);const expected=strip(row.dataset.correct);const ok=value===expected;correctCount+=Number(ok);row.classList.remove('is-correct','is-wrong');row.classList.add(ok?'is-correct':'is-wrong','revealed');row.querySelector('.ans-key').textContent=ok?'✓ إجابة صحيحة':'الصيغة المقترحة: '+row.dataset.correct});
+    const feedback=ids('feedback2');feedback.className='feedback show '+(correctCount===5?'good':'neutral');feedback.textContent=correctCount===5?'🌟 جميع الصيغ صحيحة! اكتشفتما خمس صور للفعل «كتب».':`تحققتما من ${arabicDigits(correctCount)} من ٥ صيغ بصورة صحيحة. راجعا الصيغ المبيّنة، ويمكنكما تعديل الإجابات وإعادة المحاولة.`;
+
+    if(!done[1]){done[1]=true;confetti();update()}
+  });
+  ids('next2').addEventListener('click',()=>go('stage3'));
+  ids('modelsBtn').addEventListener('click',()=>{ids('models').classList.toggle('show');ids('modelsBtn').textContent=ids('models').classList.contains('show')?'💡 إخفاء الإجابات المقترحة':'💡 عرض إجابات مقترحة'});
+  ids('finishBtn').addEventListener('click',()=>{
+    const all=Array.from(document.querySelectorAll('.essay')).every(el=>el.value.trim());
+    const guess=ids('lessonGuess').value.trim();
+    ids('feedback3').className='feedback';
+    if(all&&guess&&!done[2]){done[2]=true;confetti();update()}
+    ids('guessResult').textContent=guess?((strip(guess).includes('الافعالالخمسة')||strip(guess).includes('الافعالالخمسه'))?'🎯 توقّع موفّق! لقد اكتشفتِ عنوان الدرس.':'✍️ توقّعك: «'+guess+'». أحسنتِ المحاولة والاستنتاج!'):'يمكنكِ العودة إلى أي محطة لإكمال الإجابات متى شئتِ.';
+    preparePrint();go('finish');clearInterval(timerId);
+  });
+  const report=()=>{
+    const rows=getFields();const choices=Array.from(document.querySelectorAll('.choice'));const selected=choices.find(el=>el.classList.contains('selected'));
+    return ['مهمة: فعل واحد... خمس صور!','التاريخ: '+new Date().toLocaleDateString('ar-QA'),'','المحطة الأولى — تذكّري','نوع الفعل «تكتب»: '+(selected?selected.innerText.replace(/^[أ-د]\s*/,'').trim():'لم تجب'),'', 'المحطة الثانية — فكّري مع زميلتك',...rows.map(r=>r.querySelector('.pronoun').textContent+': '+(r.querySelector('input').value||'لم تجب')),'كيف ساعدكما الضمير؟ '+(ids('explain2').value||'لم تجب'),'','المحطة الثالثة — اكتشفي','١. ما الذي تغيّر؟ '+(ids('essay1').value||'لم تجب'),'٢. الحرف المشترك: '+(ids('essay2').value||'لم تجب'),'٣. عدد الصور: '+(ids('essay3').value||'لم تجب'),'عنوان الدرس المتوقع: '+(ids('lessonGuess').value||'لم تجب'),'','ملاحظة: الإجابات المقالية تحتاج إلى مراجعة المعلمة.'].join('\n')
+  };
+  function preparePrint(){ids('print-answers').textContent=report()}
+  ids('copyBtn').addEventListener('click',async()=>{const data=report();try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(data)}else{const e=document.createElement('textarea');e.value=data;e.style.position='fixed';e.style.opacity='0';document.body.appendChild(e);e.select();const ok=document.execCommand('copy');e.remove();if(!ok)throw Error('copy failed')}toast('✅ نُسخت الإجابات! يمكنك إرسالها للمعلمة.')}catch(e){toast('تعذّر النسخ هنا. استخدمي زر تنزيل الإجابات.')}});
+  ids('downloadBtn').addEventListener('click',()=>{const blob=new Blob(['\ufeff',report()],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='إجاباتي_الأفعال_الخمسة.txt';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)});
+  ids('reviewBtn').addEventListener('click',()=>go('stage3'));
+  ids('restartBtn').addEventListener('click',()=>{clearInterval(timerId);timerId=null;left=240;notifiedTime=false;started=false;done.fill(false);document.querySelectorAll('input,textarea').forEach(e=>e.value='');document.querySelectorAll('.choice').forEach(e=>{e.classList.remove('selected','correct','incorrect');e.removeAttribute('aria-pressed')});getFields().forEach(r=>r.classList.remove('revealed','is-correct','is-wrong'));['feedback1','feedback2','feedback3'].forEach(id=>{ids(id).className='feedback';ids(id).textContent=''});ids('models').classList.remove('show');ids('modelsBtn').textContent='💡 عرض إجابات مقترحة';ids('clock').textContent='٠٤:٠٠';ids('timerBox').classList.remove('alert');go('welcome');update();});
+  update();
+})();
+</script>
+</body>
+</html>
