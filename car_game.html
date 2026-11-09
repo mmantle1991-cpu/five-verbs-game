@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سيارة الأفعال الخمسة</title>
+  <style>
+    :root{
+      --maroon:#7a173d;
+      --teal:#238e95;
+      --gold:#d1aa50;
+      --road:#5a5a63;
+      --line:#ffd76b;
+      --soft:#f7eff2;
+      --text:#5a2030;
+      --good:#2f9e44;
+      --bad:#d94841;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Segoe UI", Tahoma, Arial, sans-serif;
+      background:#faf6f7;
+      color:var(--text);
+      min-height:100vh;
+      background-image:
+        linear-gradient(45deg, rgba(122,23,61,.05) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(122,23,61,.05) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(122,23,61,.05) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(122,23,61,.05) 75%);
+      background-size:42px 42px;
+      background-position:0 0, 0 21px, 21px -21px, -21px 0;
+    }
+    .page{max-width:1300px; margin:0 auto; padding:22px 16px 28px;}
+    .question-card{
+      background:#fff; border:2px solid #eadde3; border-radius:28px; padding:22px 20px 18px;
+      box-shadow:0 14px 34px rgba(90,40,60,.08);
+    }
+    .question-title{
+      font-size:clamp(28px,2.7vw,46px); font-weight:800; text-align:center; color:var(--maroon); margin-bottom:18px;
+    }
+    .hint-row{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-items:center; margin-bottom:16px;}
+    .badge{background:#f4e8ec; padding:10px 18px; border-radius:999px; font-weight:800; font-size:18px;}
+    .badge.timer{background:#e9f8f8; color:#0f6b72}
+    .controls{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:14px}
+    .btn{border:none; cursor:pointer; border-radius:16px; padding:12px 18px; font-size:17px; font-weight:800; color:#fff; background:var(--maroon); box-shadow:0 8px 18px rgba(122,23,61,.15)}
+    .btn.secondary{background:var(--teal)}
+    .race-wrap{margin-top:8px;}
+    .race-box{position:relative; height:640px; border-radius:30px; overflow:hidden; border:3px solid #e7d7dd; background:linear-gradient(180deg,#d9f4ff 0%, #effbfd 35%, #c3efc7 36%, #b5e38a 100%);}
+    .sky{
+      position:absolute; inset:0 0 auto 0; height:180px;
+      background:linear-gradient(180deg,#9fe3ff 0%, #d9f4ff 55%, #eefcff 100%);
+      z-index:1; overflow:hidden;
+    }
+    .sun{position:absolute; top:20px; right:34px; width:82px; height:82px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #fff8c4 0%, #ffe97a 42%, #f6b93b 100%); box-shadow:0 0 0 10px rgba(255,225,107,.20), 0 0 35px rgba(255,200,60,.55); z-index:2;}
+    .sun::before{content:""; position:absolute; inset:-14px; border-radius:50%; border:3px dashed rgba(255,215,107,.8); animation:spinSun 16s linear infinite;}
+    @keyframes spinSun{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    .cloud{position:absolute; background:rgba(255,255,255,.95); height:28px; border-radius:30px; box-shadow:0 8px 18px rgba(110,170,200,.18); z-index:2; animation:floatCloud 16s linear infinite;}
+    .cloud::before,.cloud::after{content:""; position:absolute; background:inherit; border-radius:50%;}
+    .cloud::before{width:30px; height:30px; left:12px; top:-12px}
+    .cloud::after{width:38px; height:38px; right:14px; top:-18px}
+    .cloud.c1{width:120px; top:34px; left:70px; animation-duration:18s}
+    .cloud.c2{width:90px; top:78px; left:280px; animation-duration:22s; animation-delay:-5s}
+    .cloud.c3{width:110px; top:54px; left:58%; animation-duration:20s; animation-delay:-9s}
+    @keyframes floatCloud{0%{transform:translateX(0)}50%{transform:translateX(18px)}100%{transform:translateX(0)}}
+    .hill{position:absolute; bottom:-22px; width:250px; height:110px; background:linear-gradient(180deg,#8fd276,#59ad51); border-radius:50% 50% 0 0; z-index:2; opacity:.95;}
+    .hill.h1{left:-30px}
+    .hill.h2{left:28%; width:320px; height:95px; background:linear-gradient(180deg,#9bdc85,#6bb95a)}
+    .hill.h3{right:-20px; width:280px; height:120px}
+    .tree{position:absolute; bottom:18px; width:26px; height:70px; z-index:4;}
+    .tree::before{content:""; position:absolute; bottom:0; left:10px; width:7px; height:28px; background:#8d5a2d; border-radius:4px}
+    .tree::after{content:""; position:absolute; top:0; left:0; width:26px; height:40px; background:#43a047; border-radius:50% 50% 46% 46%; box-shadow:0 0 0 8px rgba(85,170,90,.22)}
+    .tree.t1{left:16px}.tree.t2{left:86px; transform:scale(.85)}.tree.t3{right:26px}.tree.t4{right:96px; transform:scale(.9)}
+    .flower-strip{position:absolute; left:0; right:0; bottom:0; height:32px; z-index:4; background:repeating-linear-gradient(90deg,#4caf50 0 18px,#5fb85c 18px 36px)}
+    .flower-strip::before{content:"🌼 🌸 🌼 🌷 🌼 🌸 🌼 🌷 🌼"; position:absolute; inset:3px 0 0 0; text-align:center; letter-spacing:18px; font-size:20px; opacity:.95;}
+    .labels{
+      position:absolute; top:12px; left:0; right:0; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:0 16px; z-index:5;
+    }
+    .choice{
+      min-height:92px; display:flex; align-items:center; justify-content:center; text-align:center; padding:12px 10px;
+      background:rgba(255,245,247,.96); border:2px solid #dfcbd1; border-radius:22px; font-size:clamp(17px,1.45vw,27px); font-weight:800; line-height:1.7;
+      box-shadow:0 6px 14px rgba(128,89,101,.08);
+    }
+    .road{
+      position:absolute; inset:168px 0 0 0; background:var(--road); z-index:3; overflow:hidden;
+      background-image:linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.03));
+    }
+    .road::before{
+      content:""; position:absolute; inset:-200% 0 0 0;
+      background:repeating-linear-gradient(180deg,
+        transparent 0 34px,
+        rgba(255,255,255,.08) 34px 36px,
+        transparent 36px 70px);
+      animation:scrollRoad 1.2s linear infinite;
+      opacity:.65;
+    }
+    @keyframes scrollRoad{from{transform:translateY(0)}to{transform:translateY(70px)}}
+    .lane-grid{position:absolute; inset:0; display:grid; grid-template-columns:repeat(4,1fr); z-index:1;}
+    .lane{position:relative; border-left:4px dashed rgba(255,215,107,.85);}
+    .lane:first-child{border-left:none}
+    .lane.active{background:rgba(255,255,255,.08)}
+    .finish-line{
+      position:absolute; top:10px; left:0; right:0; height:16px; background:repeating-linear-gradient(90deg,#fff 0 25px,#111 25px 50px); z-index:3;
+      box-shadow:0 4px 10px rgba(0,0,0,.2);
+    }
+    .car{
+      position:absolute; width:88px; height:140px; z-index:6; touch-action:none; user-select:none; cursor:grab;
+      filter:drop-shadow(0 12px 12px rgba(0,0,0,.25));
+      transition:transform .08s linear;
+    }
+    .car.dragging{cursor:grabbing; transform:scale(1.03)}
+    .car-body{
+      position:absolute; inset:12px 8px 0 8px; background:linear-gradient(180deg,#d7384d,#951f39); border-radius:26px 26px 22px 22px;
+      border:4px solid #ffe4ea;
+    }
+    .car-window{position:absolute; top:20px; left:20px; right:20px; height:34px; background:#bdefff; border-radius:14px; border:3px solid #fff}
+    .car-window.back{top:61px; height:25px; left:18px; right:18px}
+    .wheel{position:absolute; width:16px; height:34px; background:#1b1b1f; border-radius:10px; top:28px}
+    .wheel.w1{left:-2px}.wheel.w2{right:-2px}.wheel.w3{left:-2px; top:78px}.wheel.w4{right:-2px; top:78px}
+    .finish-glow{
+      position:absolute; inset:0; background:radial-gradient(circle at center, rgba(255,255,255,.3), rgba(255,255,255,0)); pointer-events:none; opacity:0; z-index:7;
+      transition:opacity .4s ease;
+    }
+    .overlay{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:16px; z-index:10;
+      background:rgba(255,255,255,.88);
+    }
+    .overlay.hidden{display:none}
+    .card{
+      max-width:760px; width:100%; background:#fff; border:3px solid #ead37a; border-radius:28px; padding:26px 22px; text-align:center;
+      box-shadow:0 16px 36px rgba(105,60,70,.12);
+    }
+    .card h2{margin:0 0 10px; color:var(--maroon); font-size:clamp(28px,2.6vw,44px)}
+    .card p{margin:0 0 16px; line-height:1.9; font-size:clamp(18px,1.4vw,24px)}
+    .result{font-weight:800; border-radius:18px; padding:14px 16px; margin-top:12px; font-size:clamp(18px,1.4vw,24px)}
+    .good{background:#edf9ef; color:#1d6d35; border:2px solid #b7e3c0}
+    .bad{background:#fff1f1; color:#a32d2d; border:2px solid #f1c7c7}
+    .small{font-size:16px; color:#8a6073; margin-top:8px}
+    .mini-note{margin-top:10px; font-size:16px; color:#865d6f}
+    @media (max-width:900px){
+      .race-box{height:620px}
+      .labels{gap:8px; padding:0 8px}
+      .choice{font-size:16px; min-height:110px; padding:10px 8px}
+      .car{width:70px; height:118px}
+      .question-title{font-size:28px}
+    }
+    @media (max-width:600px){
+      .race-box{height:580px}
+      .labels{top:8px; gap:6px; padding:0 6px}
+      .choice{font-size:14px; line-height:1.5; min-height:118px}
+      .road{top:168px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="question-card">
+      <div class="question-title">أيُّ الجُمَلِ الآتية لا تحتوي على فعلٍ من الأفعال الخمسة؟</div>
+      <div class="hint-row">
+        <div class="badge">🚗 وجِّهي السيارة إلى المسار الصحيح</div>
+        <div class="badge timer" id="timerBadge">⏳ الوقت: 10</div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="startBtn">ابدئي السباق</button>
+        <button class="btn secondary" id="restartBtn">إعادة اللعب</button>
+      </div>
+
+      <div class="race-wrap">
+        <div class="race-box" id="raceBox">
+          <div class="sky">
+            <div class="sun"></div>
+            <div class="cloud c1"></div>
+            <div class="cloud c2"></div>
+            <div class="cloud c3"></div>
+            <div class="hill h1"></div>
+            <div class="hill h2"></div>
+            <div class="hill h3"></div>
+            <div class="tree t1"></div>
+            <div class="tree t2"></div>
+            <div class="tree t3"></div>
+            <div class="tree t4"></div>
+            <div class="flower-strip"></div>
+          </div>
+          <div class="labels" id="labels"></div>
+          <div class="road">
+            <div class="finish-line"></div>
+            <div class="lane-grid" id="laneGrid"></div>
+            <div class="finish-glow" id="finishGlow"></div>
+            <div class="car" id="car" aria-label="السيارة">
+              <div class="wheel w1"></div><div class="wheel w2"></div><div class="wheel w3"></div><div class="wheel w4"></div>
+              <div class="car-body"></div>
+              <div class="car-window"></div>
+              <div class="car-window back"></div>
+            </div>
+          </div>
+
+          <div class="overlay" id="overlay">
+            <div class="card">
+              <h2>🏁 سباق اختيار الإجابة الصحيحة</h2>
+              <p>لديكِ <strong>10 ثوانٍ</strong>. حرّكي السيارة بالماوس أو اللمس يمينًا ويسارًا حتى تدخلي المسار الصحيح.</p>
+              <p class="mini-note">الإجابة الصحيحة هي الجملة التي <strong>لا تحتوي</strong> على فعل من الأفعال الخمسة.</p>
+              <button class="btn" id="overlayStart">ابدئي الآن</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const questionData = {
+  prompt: 'أيُّ الجُمَلِ الآتية لا تحتوي على فعلٍ من الأفعال الخمسة؟',
+  choices: [
+    'أعلمُ أنكِ لن تُهمِلي دروسَكِ أبدًا.',
+    'أنتم تحرصون على تحرّي الأخبار الصادقة.',
+    'يحرصُ الوالدان على حسنِ تنشئةِ الأبناء.',
+    'هما لم يقولا إلا الصدقَ.'
+  ],
+  correctIndex: 2
+};
+
+const DURATION = 10000;
+const raceBox = document.getElementById('raceBox');
+const labels = document.getElementById('labels');
+const laneGrid = document.getElementById('laneGrid');
+const car = document.getElementById('car');
+const overlay = document.getElementById('overlay');
+const timerBadge = document.getElementById('timerBadge');
+const startBtn = document.getElementById('startBtn');
+const restartBtn = document.getElementById('restartBtn');
+const overlayStart = document.getElementById('overlayStart');
+const finishGlow = document.getElementById('finishGlow');
+
+let laneCenters = [];
+let roadRect, raceRect;
+let running = false;
+let startTime = null;
+let raf = null;
+let carState = {x:0, y:0, dragOffsetX:0, dragging:false};
+let activeLane = 0;
+
+function renderChoices(){
+  labels.innerHTML = '';
+  laneGrid.innerHTML = '';
+  questionData.choices.forEach((choice, i)=>{
+    const box = document.createElement('div');
+    box.className = 'choice';
+    box.innerHTML = `<div>${choice}</div>`;
+    labels.appendChild(box);
+
+    const lane = document.createElement('div');
+    lane.className = 'lane';
+    lane.dataset.index = i;
+    laneGrid.appendChild(lane);
+  });
+}
+
+function measure(){
+  const road = document.querySelector('.road');
+  roadRect = road.getBoundingClientRect();
+  raceRect = raceBox.getBoundingClientRect();
+  const laneEls = [...document.querySelectorAll('.lane')];
+  laneCenters = laneEls.map(l=>{
+    const r = l.getBoundingClientRect();
+    return {center: r.left - roadRect.left + r.width/2, left: r.left - roadRect.left, width:r.width};
+  });
+}
+
+function setInitialCar(){
+  measure();
+  const startLane = Math.floor(questionData.choices.length/2);
+  carState.x = laneCenters[startLane].center - car.offsetWidth/2;
+  carState.y = document.querySelector('.road').offsetHeight - car.offsetHeight - 18;
+  applyCar();
+  updateActiveLane();
+}
+
+function applyCar(){
+  car.style.left = `${carState.x}px`;
+  car.style.top = `${168 + carState.y}px`;
+}
+
+function clampX(x){
+  const roadW = document.querySelector('.road').clientWidth;
+  return Math.max(4, Math.min(roadW - car.offsetWidth - 4, x));
+}
+
+function updateActiveLane(){
+  const carCenter = carState.x + car.offsetWidth/2;
+  let idx = 0; let min = Infinity;
+  laneCenters.forEach((lane,i)=>{
+    const d = Math.abs(carCenter - lane.center);
+    if(d < min){ min = d; idx = i; }
+  });
+  activeLane = idx;
+  document.querySelectorAll('.lane').forEach((lane,i)=>lane.classList.toggle('active', i===idx));
+}
+
+function startGame(){
+  cancelAnimationFrame(raf);
+  overlay.classList.add('hidden');
+  finishGlow.style.opacity = 0;
+  setInitialCar();
+  running = true;
+  startTime = null;
+  timerBadge.textContent = '⏳ الوقت: 10';
+  raf = requestAnimationFrame(tick);
+}
+
+function tick(ts){
+  if(!running) return;
+  if(!startTime) startTime = ts;
+  const elapsed = ts - startTime;
+  const progress = Math.min(elapsed / DURATION, 1);
+  const roadH = document.querySelector('.road').offsetHeight;
+  const topLimit = 28;
+  const bottomStart = roadH - car.offsetHeight - 18;
+  carState.y = bottomStart - (bottomStart - topLimit) * progress;
+  applyCar();
+  updateActiveLane();
+  timerBadge.textContent = `⏳ الوقت: ${Math.max(0, Math.ceil((DURATION - elapsed)/1000))}`;
+  if(progress < 1){
+    raf = requestAnimationFrame(tick);
+  } else {
+    endGame();
+  }
+}
+
+function endGame(){
+  running = false;
+  cancelAnimationFrame(raf);
+  finishGlow.style.opacity = 1;
+  const correct = activeLane === questionData.correctIndex;
+  playTone(correct ? 'good' : 'bad');
+  const answerText = questionData.choices[questionData.correctIndex];
+  overlay.innerHTML = `
+    <div class="card">
+      <h2>${correct ? '🎉 إجابة صحيحة!' : '🌷 حاولي مرة أخرى'}</h2>
+      <p>${correct ? 'أحسنتِ، وجَّهتِ السيارة إلى المسار الصحيح خلال 10 ثوانٍ.' : 'المسار الذي اخترتِه ليس هو الإجابة الصحيحة.'}</p>
+      <div class="result ${correct ? 'good':'bad'}">
+        الإجابة الصحيحة: <br><strong>${answerText}</strong>
+      </div>
+      <p class="small">لأن الفعل في هذه الجملة هو <strong>يحرصُ</strong>، وهو ليس من الأفعال الخمسة.</p>
+      <div style="margin-top:16px">
+        <button class="btn" id="againBtn">إعادة اللعب</button>
+      </div>
+    </div>`;
+  overlay.classList.remove('hidden');
+  document.getElementById('againBtn').addEventListener('click', resetGame);
+}
+
+function resetGame(){
+  overlay.innerHTML = `
+    <div class="card">
+      <h2>🏁 سباق اختيار الإجابة الصحيحة</h2>
+      <p>لديكِ <strong>10 ثوانٍ</strong>. حرّكي السيارة بالماوس أو اللمس يمينًا ويسارًا حتى تدخلي المسار الصحيح.</p>
+      <p class="mini-note">الإجابة الصحيحة هي الجملة التي <strong>لا تحتوي</strong> على فعل من الأفعال الخمسة.</p>
+      <button class="btn" id="overlayStart">ابدئي الآن</button>
+    </div>`;
+  document.getElementById('overlayStart').addEventListener('click', startGame);
+  overlay.classList.remove('hidden');
+  timerBadge.textContent = '⏳ الوقت: 10';
+  finishGlow.style.opacity = 0;
+  setInitialCar();
+}
+
+function pointerXFromEvent(e){
+  const point = e.touches ? e.touches[0] : e;
+  return point.clientX;
+}
+
+function beginDrag(e){
+  const road = document.querySelector('.road');
+  if(!running) return;
+  const clientX = pointerXFromEvent(e);
+  carState.dragging = true;
+  car.classList.add('dragging');
+  carState.dragOffsetX = clientX - road.getBoundingClientRect().left - carState.x;
+  e.preventDefault();
+}
+function moveDrag(e){
+  if(!carState.dragging || !running) return;
+  const roadLeft = document.querySelector('.road').getBoundingClientRect().left;
+  const clientX = pointerXFromEvent(e);
+  carState.x = clampX(clientX - roadLeft - carState.dragOffsetX);
+  applyCar();
+  updateActiveLane();
+  e.preventDefault();
+}
+function endDrag(){
+  carState.dragging = false;
+  car.classList.remove('dragging');
+}
+
+function playTone(type='good'){
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  if(type==='good'){
+    osc.frequency.setValueAtTime(640, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.2);
+  } else {
+    osc.frequency.setValueAtTime(240, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.25);
+  }
+  gain.gain.setValueAtTime(0.001, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.14, ctx.currentTime + 0.03);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+  osc.start();
+  osc.stop(ctx.currentTime + 0.38);
+}
+
+renderChoices();
+window.addEventListener('load', setInitialCar);
+window.addEventListener('resize', setInitialCar);
+startBtn.addEventListener('click', startGame);
+restartBtn.addEventListener('click', resetGame);
+overlayStart.addEventListener('click', startGame);
+car.addEventListener('mousedown', beginDrag);
+window.addEventListener('mousemove', moveDrag);
+window.addEventListener('mouseup', endDrag);
+car.addEventListener('touchstart', beginDrag, {passive:false});
+window.addEventListener('touchmove', moveDrag, {passive:false});
+window.addEventListener('touchend', endDrag);
+</script>
+</body>
+</html>
