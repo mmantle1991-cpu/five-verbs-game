@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#6b1f3d" />
+  <meta name="description" content="لعبة تفاعلية لتصنيف حروف نصب الفعل المضارع وجزمه بالسحب أو اللمس مع أصوات النجاح." />
+  <title>من هم أصدقاء الفعل المضارع؟ | لعبة جمع الأدوات</title>
+  <style>
+    :root{--plum:#70203e;--plum-dark:#4a1730;--teal:#197c85;--teal-dark:#0d626b;--gold:#d0a54e;--gold-light:#fff1ce;--coral:#ba623c;--paper:#fffaf7;--ink:#442337;--muted:#846875;--stroke:#efdedf;--shadow:0 14px 34px rgba(67,25,44,.10)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;color:var(--ink);font-family:Tahoma,'Segoe UI',Arial,sans-serif;background-color:#fbf7f3;background-image:linear-gradient(45deg,transparent 48%,#f2e5e3 49%,#f2e5e3 51%,transparent 52%),linear-gradient(-45deg,transparent 48%,#f2e5e3 49%,#f2e5e3 51%,transparent 52%);background-size:92px 92px;overflow-x:hidden}
+    button{font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+    button:focus-visible{outline:4px solid #edb650;outline-offset:3px}
+    .wrap{max-width:1250px;margin:auto;padding:22px 20px 44px}
+    .header{position:relative;border-radius:34px;background:linear-gradient(125deg,#55162e 0%,#75203e 61%,#8e3450 100%);min-height:155px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 35px 27px;color:#fff;box-shadow:0 14px 24px rgba(91,27,55,.18);overflow:hidden}
+    .header:before,.header:after{content:'✦';position:absolute;color:#e8bf6b;opacity:.2;font-size:135px;line-height:1;pointer-events:none}.header:before{left:-5px;top:-22px}.header:after{right:40%;bottom:-115px}
+    .heading{position:relative;z-index:1;flex:1}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;background:#ffffff20;border:1px solid #ffffff40;border-radius:99px;padding:7px 14px;font-size:13px;font-weight:700}
+    h1{font-size:clamp(26px,3.4vw,44px);line-height:1.34;letter-spacing:-.6px;margin:9px 0 4px}
+    .subtitle{font-size:clamp(13px,1.5vw,17px);color:#ffe8ed;margin:0}
+    .header-icon{position:relative;z-index:1;flex:0 0 auto;width:107px;height:107px;background:radial-gradient(circle at 33% 27%,#fff8e0,#ead09a);color:var(--plum);display:grid;place-items:center;border-radius:31px;transform:rotate(-9deg);box-shadow:inset 0 0 0 5px #d7b45e,0 7px 0 #45152e25;font-size:67px}
+    .intro{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:16px 4px 19px}
+    .question{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #eee0df;border-radius:22px;padding:13px 18px;box-shadow:0 6px 18px #5220400a;font-size:18px;font-weight:800;color:var(--plum)}
+    .question .qicon{font-size:23px}
+    .actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .pill-button{border-radius:16px;border:1px solid #e7d5d8;background:#fff;color:var(--plum);font-weight:800;padding:12px 15px;min-height:44px;transition:background .18s,transform .18s}
+    .pill-button:hover{background:#fff0f1;transform:translateY(-1px)}
+    .game-panel{border-radius:28px;background:rgba(255,255,255,.94);border:1px solid #f0e3e0;box-shadow:var(--shadow);padding:22px;overflow:hidden}
+    .section-title{display:flex;align-items:center;gap:10px;margin:0 0 16px;font-size:23px;font-weight:900;color:var(--plum)}
+    .section-title .number{display:grid;place-items:center;height:38px;width:38px;flex:0 0 auto;border-radius:14px;background:#f9e6ea;color:var(--plum);font-size:21px}
+    .basket-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .basket{position:relative;min-height:208px;display:flex;flex-direction:column;align-items:center;padding:16px 18px 13px;background:#f6fcfc;border:3px dashed #9fcacf;border-radius:25px;transition:transform .18s,background .18s,border-color .18s,box-shadow .18s;touch-action:manipulation}
+    .basket[data-kind="nasb"]{background:#fff8f0;border-color:#efd1a5}
+    .basket[data-kind="jazm"]{background:#f1fbfb;border-color:#aed5d7}
+    .basket h3{font-size:clamp(18px,2vw,26px);margin:1px 0 3px;white-space:nowrap}
+    .basket[data-kind="nasb"] h3{color:#9a5431}.basket[data-kind="jazm"] h3{color:#137581}
+    .basket .explain{font-size:12px;color:#957984;font-weight:700;margin:0 0 10px}
+    .basket-visual{width:min(100%,350px);height:76px;position:relative;display:flex;justify-content:center;align-items:center;gap:8px}
+    .basket-emoji{font-size:65px;line-height:1;filter:drop-shadow(0 6px 2px #72442116)}
+    .basket .bin-count{border-radius:99px;padding:6px 12px;background:#ffffffd9;border:1px solid #eadfdb;color:#70515e;font-size:13px;font-weight:800;white-space:nowrap}
+    .basket .collected-items{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;min-height:35px;align-content:center;align-items:center;max-width:100%}
+    .mini-chip{padding:6px 11px;border-radius:99px;background:white;color:var(--ink);box-shadow:0 2px 5px #46203212;font-size:12px;font-weight:800;animation:popIn .35s ease-out both}
+    .basket .basket-hint{position:absolute;inset:9px;display:grid;place-items:center;background:#fffaf1d9;border-radius:18px;color:#a65f33;font-size:19px;font-weight:900;opacity:0;pointer-events:none;transition:opacity .16s}
+    .basket.is-target{border-style:solid;border-color:#d6a241;box-shadow:0 0 0 5px #f6deb97c,0 11px 19px #5c29341a;transform:translateY(-2px)}
+    .basket.is-over{background:#fff4ce!important;border-color:#d5a038!important;transform:scale(1.02)}
+    .basket.is-correct{animation:basketBounce .44s ease}.basket.is-wrong{animation:shake .35s ease}
+    .basket .basket-hint{font-size:14px}
+    .hintbar{margin:16px 2px 0;background:#f6edf0;border:1px solid #eedfe3;border-radius:17px;padding:11px 15px;text-align:center;font-size:14px;font-weight:700;color:#7d3855}
+    .hintbar.error{background:#fff1ee;border-color:#fac8bd;color:#a44235}
+    .hintbar.success{background:#ebf8f0;border-color:#a5dec1;color:#277451}
+    .cards-area{margin-top:18px;background:linear-gradient(160deg,#fffefa,#fff8f6);border:1px solid #f1e0d9;border-radius:25px;padding:18px 16px 23px;position:relative;overflow:hidden}
+    .cards-area:before{content:'✦';position:absolute;left:9px;top:18px;color:#f0dfb1;font-size:70px;pointer-events:none}
+    .cards-top{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-bottom:13px;position:relative;z-index:1}
+    .cards-top .title-text{font-size:21px;font-weight:900;color:var(--plum)}
+    .progress-text{color:#856875;font-size:14px;font-weight:800}
+    .progress-track{height:13px;background:#f0e1e4;border-radius:99px;overflow:hidden;margin-bottom:20px}
+    #progressBar{height:100%;width:0%;background:linear-gradient(90deg,#e5b859,#248a92);border-radius:inherit;transition:width .36s ease}
+    .rain-zone{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;min-height:177px;align-content:start;padding:3px 2px 4px}
+    .word-card{position:relative;display:flex;justify-content:center;align-items:center;gap:8px;min-height:67px;border-radius:18px;border:2px solid #e5c4cf;color:var(--plum);background:#fff;box-shadow:0 6px 0 #f2e0e6,0 8px 14px #572f3a0c;font-weight:900;font-size:clamp(15px,2vw,21px);user-select:none;touch-action:none;transition:background .18s,border-color .18s,box-shadow .18s,scale .18s;cursor:grab}
+    .word-card .drop-icon{font-size:17px;color:#cda14c}
+    .word-card:hover{background:#fff9e8;border-color:#ddb563;scale:1.018}
+    .word-card.is-selected{background:#fff1cc;border-color:#b98630;box-shadow:0 0 0 4px #f6d47b9c,0 5px 0 #e9c96f;scale:1.035}
+    .word-card.is-wrong{animation:shake .38s ease;border-color:#e58070;background:#ffedea}
+    .word-card.is-collected{animation:vanish .4s ease forwards;pointer-events:none}
+    .word-card.fall{animation:fallDown .66s cubic-bezier(.25,.75,.28,1.12) backwards}
+    .status-row{margin:18px 4px 0;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+    .stars{color:#bc8b25;font-weight:900;font-size:19px;letter-spacing:2px}
+    .score{background:#f3f9fa;border:1px solid #cde7e8;color:#176e77;border-radius:99px;padding:9px 16px;font-size:15px;font-weight:800}
+    .footer{text-align:center;color:#9b7d83;margin-top:18px;font-size:13px}
+    .footer strong{color:#732d4a}
+    .dialog-backdrop{position:fixed;inset:0;background:rgba(35,19,31,.65);display:none;align-items:center;justify-content:center;padding:18px;z-index:30;overflow:auto}
+    .dialog-backdrop.visible{display:flex}
+    .dialog{position:relative;max-width:580px;width:100%;background:#fff;border-radius:30px;padding:32px 24px;box-shadow:0 20px 55px #1c081a50;text-align:center;animation:popIn .28s ease both}
+    .dialog .trophy{font-size:69px;margin-bottom:5px}.dialog h2{color:var(--plum);font-size:30px;margin:4px 0 10px}.dialog p{color:#765d69;line-height:1.9}
+    .answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:17px 0}
+    .answer-card{background:#fff8f1;border-radius:17px;padding:14px 10px;text-align:right;border:1px solid #f3d8c2}
+    .answer-card:nth-child(2){background:#f1fafb;border-color:#c7e5e6}
+    .answer-card h3{font-size:18px;margin:0 0 7px;color:var(--plum)}.answer-card p{font-size:13px;line-height:2;margin:0}
+    .primary-button{background:var(--plum);color:#fff;border:0;border-radius:16px;padding:13px 29px;font-size:17px;font-weight:800;box-shadow:0 6px 0 #42152a;min-height:45px}
+    .primary-button:hover{background:#872548}.primary-button:active{transform:translateY(3px);box-shadow:0 3px 0 #42152a}
+    .drag-ghost{pointer-events:none;position:fixed;z-index:50;display:flex;align-items:center;justify-content:center;padding:10px 15px;min-width:110px;min-height:58px;border:3px solid #d9a64a;background:#fff7d6;color:var(--plum);border-radius:16px;font-size:20px;font-weight:900;box-shadow:0 14px 30px #46203355;transform:translate(-50%,-50%) rotate(-6deg)}
+    .sparkle{position:fixed;z-index:60;pointer-events:none;color:#d6a03d;font-size:25px;font-weight:900;animation:spark .7s ease both}
+    @keyframes fallDown{0%{opacity:0;transform:translateY(-220px) rotate(-13deg) scale(.73)}72%{opacity:1;transform:translateY(8px) rotate(3deg)}100%{opacity:1;transform:translateY(0) rotate(0) scale(1)}}
+    @keyframes vanish{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.3) translateY(-25px)}}
+    @keyframes popIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+    @keyframes basketBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%,75%{transform:translateX(-5px)}50%{transform:translateX(5px)}}
+    @keyframes spark{from{opacity:1;transform:translate(0,0) scale(.4)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.7) rotate(25deg)}}
+    @media(max-width:720px){.wrap{padding:10px 10px 26px}.header{padding:19px 16px;min-height:127px;border-radius:25px}.header-icon{width:74px;height:74px;border-radius:21px;font-size:43px}h1{font-size:clamp(22px,5vw,31px)}.eyebrow{font-size:10px}.subtitle{font-size:12px}.intro{margin:12px 0}.question{padding:11px 12px;font-size:15px;width:100%}.actions{width:100%}.pill-button{flex:1}.game-panel{padding:13px;border-radius:23px}.section-title{font-size:18px;margin-bottom:11px}.section-title .number{width:31px;height:31px;font-size:17px}.basket-layout{gap:8px}.basket{padding:11px 6px;min-height:201px;border-radius:18px;border-width:2px}.basket h3{font-size:17px}.basket .explain{font-size:10px}.basket-emoji{font-size:48px}.basket-visual{height:61px;gap:2px}.basket .bin-count{font-size:11px;padding:4px 6px}.basket .collected-items{gap:4px}.mini-chip{font-size:10px;padding:5px 7px}.hintbar{font-size:12px;padding:9px 10px}.cards-area{padding:13px 10px 16px;border-radius:20px}.cards-top .title-text{font-size:17px}.progress-text{font-size:11px}.rain-zone{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-height:280px}.word-card{min-height:59px;font-size:17px}.word-card .drop-icon{font-size:13px}.status-row{margin-top:13px}.dialog{padding:25px 15px}.dialog h2{font-size:25px}.answer-grid{gap:8px}.answer-card{padding:11px 8px}.answer-card h3{font-size:15px}.answer-card p{font-size:11px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="header">
+      <div class="heading">
+        <span class="eyebrow">✦ اللغة العربية • لعبة تصنيف تفاعلية ✦</span>
+        <h1>مَنْ هُمْ أصدقاءُ الفعلِ المُضارِع؟</h1>
+        <p class="subtitle">تحدّي سَلَّتَيِ النَّصبِ والجَزمِ — اجمعي الأدوات في المكان الصحيح!</p>
+      </div>
+      <div class="header-icon" role="img" aria-label="سلة جمع الأدوات">🧺</div>
+    </header>
+
+    <div class="intro">
+      <div class="question"><span class="qicon">❓</span> السؤال: صَنِّفي الأدواتِ الآتيةَ إلى حروفِ النصبِ وحروفِ الجزمِ.</div>
+      <div class="actions">
+        <button class="pill-button" id="soundBtn" type="button" aria-pressed="true">🔊 الصوت: مُفعَّل</button>
+        <button class="pill-button" id="resetBtn" type="button">↻ إعادة اللعب</button>
+      </div>
+    </div>
+
+    <section class="game-panel" aria-labelledby="basketsHeading">
+      <h2 class="section-title" id="basketsHeading"><span class="number">١</span> اختاري السَّلَّة المناسبة لكل بطاقة</h2>
+      <div class="basket-layout">
+        <button class="basket" data-kind="nasb" type="button" aria-label="سلة حروف النصب">
+          <h3>حروف النَّصب</h3>
+          <p class="explain">تَنْصِبُ الفعلَ المُضارِعَ</p>
+          <div class="basket-visual"><span class="basket-emoji" aria-hidden="true">🧺</span><span class="bin-count" id="nasbCount">٠ من ٥</span></div>
+          <div class="collected-items" id="nasbItems" aria-label="الأدوات المصنفة في النصب"></div>
+        </button>
+        <button class="basket" data-kind="jazm" type="button" aria-label="سلة حروف الجزم">
+          <h3>حروف الجَزم</h3>
+          <p class="explain">تَجْزِمُ الفعلَ المُضارِعَ</p>
+          <div class="basket-visual"><span class="basket-emoji" aria-hidden="true">🧺</span><span class="bin-count" id="jazmCount">٠ من ٣</span></div>
+          <div class="collected-items" id="jazmItems" aria-label="الأدوات المصنفة في الجزم"></div>
+        </button>
+      </div>
+      <p class="hintbar" id="message" role="status" aria-live="polite">💡 اضغطي على البطاقة ثم اختاري السَّلَّة، أو اسحبي البطاقة إليها مباشرةً.</p>
+
+      <div class="cards-area" aria-labelledby="cardsHeading">
+        <div class="cards-top"><span class="title-text" id="cardsHeading">☁️ أمطار الأدوات اللغوية</span><span class="progress-text" id="progressLabel">جُمِعَتْ ٠ من ٨ بطاقات</span></div>
+        <div class="progress-track" role="progressbar" aria-label="تقدّم جمع البطاقات" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="progressTrack"><div id="progressBar"></div></div>
+        <div class="rain-zone" id="rainZone" aria-label="بطاقات الأدوات المتساقطة"></div>
+      </div>
+      <div class="status-row">
+        <span class="stars" id="stars" aria-label="النجوم المكتسبة">☆ ☆ ☆</span>
+        <span class="score" id="score">🌟 ٠ / ٨ إجابات صحيحة</span>
+      </div>
+    </section>
+    <p class="footer">✦ <strong>كلُّ أداةٍ لها صديقٌ من نوعها!</strong> ✦ صُنعت لتعمل على الهاتف والكمبيوتر والسبورة الذكية.</p>
+  </main>
+
+  <div class="dialog-backdrop" id="winDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" aria-hidden="true">
+    <div class="dialog">
+      <div class="trophy">🏆</div>
+      <h2 id="dialogTitle">أحسنتِ يا بطلة اللغة العربية!</h2>
+      <p>جمعتِ جميع أصدقاء الفعل المضارع في السلتين الصحيحتين. إليكِ القاعدة التي اكتشفتِها:</p>
+      <div class="answer-grid">
+        <div class="answer-card"><h3>🟠 حروف النصب</h3><p>أَنْ – لَنْ – كَيْ – حَتَّى – لام التعليل</p></div>
+        <div class="answer-card"><h3>🔵 حروف الجزم</h3><p>لَمْ – لا الناهية – لام الأمر</p></div>
+      </div>
+      <button id="playAgainBtn" class="primary-button" type="button">🔄 العبي من جديد</button>
+    </div>
+  </div>
+
+  <script>
+    (function(){'use strict';
+      const ITEMS=[
+        {id:'an',text:'أَنْ',category:'nasb'},
+        {id:'lan',text:'لَنْ',category:'nasb'},
+        {id:'kay',text:'كَيْ',category:'nasb'},
+        {id:'hatta',text:'حَتَّى',category:'nasb'},
+        {id:'lamt',text:'لامُ التَّعليل',category:'nasb'},
+        {id:'lam',text:'لَمْ',category:'jazm'},
+        {id:'lanaa',text:'لا النَّاهية',category:'jazm'},
+        {id:'lamamr',text:'لامُ الأَمْر',category:'jazm'}
+      ];
+      const NAMES={nasb:'النَّصب',jazm:'الجَزم'};
+      const totals={nasb:5,jazm:3};
+      const $=id=>document.getElementById(id);
+      const baskets=Array.from(document.querySelectorAll('.basket'));
+      let selectedId=null,selectedBasket=null,done=new Set(),counts={nasb:0,jazm:0},soundOn=true,audioCtx=null,pointer=null,ghost=null,suppressClick=false,round=0;
+      function arabicDigits(n){return String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[Number(d)]);}
+      function audio(){if(!soundOn)return null;try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;audioCtx=audioCtx||new AC();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx}catch(_){return null}}
+      function tone(freq,start,duration,type='sine',volume=.08){const c=audio();if(!c)return;const o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(freq,c.currentTime+start);g.gain.setValueAtTime(.00001,c.currentTime+start);g.gain.exponentialRampToValueAtTime(volume,c.currentTime+start+.015);g.gain.exponentialRampToValueAtTime(.00001,c.currentTime+start+duration);o.connect(g);g.connect(c.destination);o.start(c.currentTime+start);o.stop(c.currentTime+start+duration+.02)}
+      function positive(){tone(523,0,.13);tone(659,.11,.16);tone(784,.24,.28,'sine',.09)}
+      function negative(){tone(260,0,.12,'triangle',.055);tone(210,.13,.17,'triangle',.04)}
+      function victory(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.13,.25,'sine',.06))}
+      function say(msg,cls=''){const el=$('message');el.textContent=msg;el.className='hintbar'+(cls?' '+cls:'')}
+      function cardEl(id){return document.querySelector('.word-card[data-id="'+id+'"]')}
+      function getItem(id){return ITEMS.find(x=>x.id===id)}
+      function setSelected(id){selectedId=id;document.querySelectorAll('.word-card').forEach(c=>{const yes=c.dataset.id===id;c.classList.toggle('is-selected',yes);c.setAttribute('aria-pressed',yes?'true':'false')});if(id)say('✨ اختاري الآن إحدى السَّلَّتَين لوضع «'+getItem(id).text+'» فيها.');}
+      function setTarget(kind){selectedBasket=kind;baskets.forEach(b=>b.classList.toggle('is-target',b.dataset.kind===kind));if(kind)say('🧺 سَلَّة '+NAMES[kind]+' مُحدَّدة. اضغطي على البطاقة التي تنتمي إليها.');}
+      function updateProgress(){const n=done.size;$('nasbCount').textContent=arabicDigits(counts.nasb)+' من ٥';$('jazmCount').textContent=arabicDigits(counts.jazm)+' من ٣';$('progressLabel').textContent='جُمِعَتْ '+arabicDigits(n)+' من ٨ بطاقات';$('progressTrack').setAttribute('aria-valuenow',String(n));$('progressBar').style.width=(n/8*100)+'%';$('score').textContent='🌟 '+arabicDigits(n)+' / ٨ إجابات صحيحة';let s=n>=8?3:n>=5?2:n>=2?1:0;$('stars').textContent=Array.from({length:3},(_,i)=>i<s?'★':'☆').join('  ')}
+      function particles(x,y){for(let i=0;i<8;i++){const e=document.createElement('span');e.className='sparkle';e.textContent=i%2?'✦':'★';e.style.left=(x+(Math.random()*28-14))+'px';e.style.top=(y+(Math.random()*18-9))+'px';e.style.setProperty('--dx',((Math.random()-.5)*155)+'px');e.style.setProperty('--dy',((Math.random()-.5)*125)+'px');document.body.append(e);setTimeout(()=>e.remove(),720)}}
+      function classify(id,kind){const item=getItem(id);if(!item||done.has(id))return;const basket=document.querySelector('.basket[data-kind="'+kind+'"]');if(!basket)return;
+        if(item.category!==kind){negative();basket.classList.remove('is-wrong');void basket.offsetWidth;basket.classList.add('is-wrong');const tile=cardEl(id);if(tile){tile.classList.remove('is-wrong');void tile.offsetWidth;tile.classList.add('is-wrong');setTimeout(()=>tile.classList.remove('is-wrong'),420)}say('🌷 محاولة جميلة! فكّري من جديد: هل «'+item.text+'» تنصب الفعل المضارع أم تجزمه؟','error');return}
+        done.add(id);counts[kind]++;positive();const rect=basket.getBoundingClientRect();particles(rect.left+rect.width/2,rect.top+rect.height/2);basket.classList.remove('is-correct');void basket.offsetWidth;basket.classList.add('is-correct');
+        const chip=document.createElement('span');chip.className='mini-chip';chip.textContent=item.text;$(kind+'Items').append(chip);
+        const tile=cardEl(id);if(tile){tile.classList.add('is-collected');tile.disabled=true;setTimeout(()=>tile.remove(),430)}
+        if(selectedId===id)setSelected(null);updateProgress();
+        if(done.size===8){say('🏆 رائع! جمعتِ جميع الأدوات في أماكنها الصحيحة.','success');setTimeout(()=>{victory();$('winDialog').classList.add('visible');$('winDialog').setAttribute('aria-hidden','false');$('playAgainBtn').focus()},700)}
+        else say('✅ أحسنتِ! «'+item.text+'» من أدوات '+NAMES[kind]+'. واصلي جمع البطاقات!','success');
+      }
+      function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+      function createCard(item,index){const b=document.createElement('button');b.type='button';b.className='word-card fall';b.dataset.id=item.id;b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','بطاقة '+item.text);b.style.animationDelay=(index*.11)+'s';b.innerHTML='<span class="drop-icon" aria-hidden="true">✦</span><span>'+item.text+'</span>';b.addEventListener('animationend',()=>{b.classList.remove('fall');b.style.animationDelay=''});b.addEventListener('click',()=>{if(suppressClick){suppressClick=false;return}if(done.has(item.id))return;if(selectedBasket){classify(item.id,selectedBasket)}else{setSelected(selectedId===item.id?null:item.id)}});b.addEventListener('pointerdown',startPointer);return b}
+      function reset(){round++;const thisRound=round;done=new Set();counts={nasb:0,jazm:0};selectedId=null;selectedBasket=null;clearGhost();baskets.forEach(b=>b.classList.remove('is-target','is-over','is-wrong','is-correct'));$('nasbItems').replaceChildren();$('jazmItems').replaceChildren();const zone=$('rainZone');zone.replaceChildren();shuffle(ITEMS.slice()).forEach((item,i)=>zone.append(createCard(item,i)));$('winDialog').classList.remove('visible');$('winDialog').setAttribute('aria-hidden','true');updateProgress();say('💡 اضغطي على البطاقة ثم اختاري السَّلَّة، أو اسحبي البطاقة إليها مباشرةً.');}
+      baskets.forEach(b=>b.addEventListener('click',()=>{const kind=b.dataset.kind;if(selectedId)classify(selectedId,kind);else if(selectedBasket===kind){setTarget(null);say('💡 اختاري بطاقةً ثم اضغطي على السَّلَّة المناسبة.')}else setTarget(kind)}));
+      $('soundBtn').addEventListener('click',()=>{soundOn=!soundOn;const b=$('soundBtn');b.setAttribute('aria-pressed',soundOn?'true':'false');b.textContent=soundOn?'🔊 الصوت: مُفعَّل':'🔇 الصوت: مُتوقِّف';if(soundOn)positive()});
+      $('resetBtn').addEventListener('click',reset);$('playAgainBtn').addEventListener('click',reset);
+      // دعم السحب بواسطة الماوس أو اللمس، دون الحاجة إلى مكتبات خارجية.
+      function startPointer(ev){if(ev.button!==0||done.has(ev.currentTarget.dataset.id))return;pointer={id:ev.pointerId,card:ev.currentTarget,itemId:ev.currentTarget.dataset.id,x:ev.clientX,y:ev.clientY,moved:false};document.addEventListener('pointermove',movePointer,{passive:false});document.addEventListener('pointerup',endPointer);document.addEventListener('pointercancel',cancelPointer)}
+      function clearGhost(){if(ghost){ghost.remove();ghost=null}baskets.forEach(b=>b.classList.remove('is-over'))}
+      function movePointer(ev){if(!pointer||ev.pointerId!==pointer.id)return;const dx=ev.clientX-pointer.x,dy=ev.clientY-pointer.y;if(!pointer.moved&&Math.hypot(dx,dy)>9){pointer.moved=true;ghost=document.createElement('div');ghost.className='drag-ghost';ghost.textContent=getItem(pointer.itemId).text;document.body.append(ghost);pointer.card.style.opacity='.4'}if(pointer.moved){ev.preventDefault();ghost.style.left=ev.clientX+'px';ghost.style.top=ev.clientY+'px';const under=document.elementFromPoint(ev.clientX,ev.clientY);const hit=under&&under.closest('.basket');baskets.forEach(b=>b.classList.toggle('is-over',b===hit))}}
+      function cleanupPointer(){document.removeEventListener('pointermove',movePointer);document.removeEventListener('pointerup',endPointer);document.removeEventListener('pointercancel',cancelPointer);if(pointer&&pointer.card)pointer.card.style.opacity='';clearGhost();pointer=null}
+      function endPointer(ev){if(!pointer||ev.pointerId!==pointer.id)return;const p=pointer;if(p.moved){const under=document.elementFromPoint(ev.clientX,ev.clientY);const hit=under&&under.closest('.basket');if(hit){classify(p.itemId,hit.dataset.kind)}else{setSelected(p.itemId);say('🧺 أفلتِّ البطاقة خارج السَّلَّة. اختاري السَّلَّة المناسبة الآن.')}suppressClick=true;setTimeout(()=>{suppressClick=false},300)}cleanupPointer()}
+      function cancelPointer(){cleanupPointer()}
+      reset();
+    })();
+  </script>
+</body>
+</html>
