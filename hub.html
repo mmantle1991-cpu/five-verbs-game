@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6d1c3b">
+  <meta name="description" content="صفحة تجمع الألعاب التفاعلية الخمس لدرس الأفعال الخمسة.">
+  <title>عالم الأفعال الخمسة | مركز الألعاب التفاعلية</title>
+  <style>
+    :root{
+      --wine:#6d1c3b; --wine-dark:#431025; --teal:#188b92;
+      --orange:#c45a34; --gold:#d1a650; --ink:#4b2233;
+      --muted:#785a68; --paper:#fffbf8; --pink:#f7eaf0;
+      --stroke:#eadce1; --shadow:0 14px 35px rgba(90,37,60,.10);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; min-height:100vh; color:var(--ink);
+      font-family:Tahoma,"Segoe UI",Arial,sans-serif;
+      background-color:#fbf6f3;
+      background-image:linear-gradient(45deg,rgba(109,28,59,.035) 12.5%,transparent 12.5%,transparent 87.5%,rgba(109,28,59,.035) 87.5%),linear-gradient(-45deg,rgba(109,28,59,.035) 12.5%,transparent 12.5%,transparent 87.5%,rgba(109,28,59,.035) 87.5%);
+      background-size:62px 62px;
+    }
+    button,a{-webkit-tap-highlight-color:transparent}
+    a:focus-visible,button:focus-visible{outline:4px solid #efb756;outline-offset:3px}
+    .container{width:min(1170px,calc(100% - 32px));margin:auto}
+    .masthead{padding-top:24px}
+    .hero{
+      position:relative; overflow:hidden; isolation:isolate; border-radius:33px;
+      background:linear-gradient(130deg,#5a1532 0%,#7b2447 66%,#952c4f 100%);
+      box-shadow:0 16px 38px rgba(88,27,53,.20); color:#fff;
+      text-align:center; padding:39px 24px 37px;
+    }
+    .hero::before,.hero::after{position:absolute;content:"✦";font-size:clamp(64px,10vw,160px);color:rgba(236,198,108,.2);z-index:-1}
+    .hero::before{right:4%;top:-20px;transform:rotate(20deg)}
+    .hero::after{left:5%;bottom:-68px;transform:rotate(-20deg)}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.23);border-radius:999px;padding:9px 17px;font-size:14px;font-weight:700;letter-spacing:.1px}
+    .hero h1{font-size:clamp(31px,5.5vw,59px);line-height:1.38;margin:13px 0 6px;font-weight:900;letter-spacing:-.5px}
+    .hero p{max-width:720px;line-height:1.95;margin:0 auto;font-size:clamp(15px,2vw,19px);color:#faedf2}
+    .hero-foot{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+    .hero-foot span{background:#fff;color:var(--wine);border-radius:999px;padding:8px 16px;font-weight:800;font-size:14px}
+    .intro{text-align:center;padding:32px 10px 24px}
+    .intro h2{font-size:clamp(23px,3vw,34px);margin:0 0 9px;color:var(--wine)}
+    .intro p{margin:0;color:var(--muted);line-height:1.9;font-size:16px}
+    .games{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;padding-bottom:20px}
+    .game{
+      position:relative;min-width:0;display:flex;flex-direction:column;overflow:hidden;
+      background:rgba(255,255,255,.96);border:1.5px solid var(--stroke);
+      border-radius:25px;box-shadow:var(--shadow);padding:23px 23px 19px;
+      transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+    }
+    .game:hover{transform:translateY(-5px);box-shadow:0 18px 35px rgba(90,37,60,.15);border-color:#d7b7c3}
+    .game::before{content:"";position:absolute;inset:0 0 auto;height:7px;background:var(--accent)}
+    .game-head{display:flex;gap:12px;align-items:center;margin-bottom:19px}
+    .symbol{flex:0 0 76px;width:76px;height:76px;display:grid;place-items:center;border-radius:23px;background:var(--tint);font-size:37px;border:2px solid var(--borderTint)}
+    .number{display:block;color:var(--accent);font-weight:800;font-size:14px;line-height:1.7}
+    .game h3{margin:1px 0 0;font-size:clamp(19px,1.8vw,24px);line-height:1.55;color:var(--wine)}
+    .game p{font-size:15px;line-height:2;color:#775664;margin:0 0 18px;flex:1}
+    .game .kind{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:999px;background:var(--tint);color:var(--accent);font-size:12.5px;font-weight:800;align-self:flex-start;margin-bottom:17px}
+    .play{display:flex;justify-content:center;align-items:center;gap:9px;border-radius:16px;padding:15px 10px;text-decoration:none;color:#fff;background:var(--accent);font-weight:800;font-size:16px;transition:filter .2s,transform .2s;min-height:54px}
+    .play:hover{filter:brightness(.91);transform:translateY(-1px)}
+    .play svg{width:20px;height:20px;flex:none;transform:scaleX(-1)}
+    .game.first{--accent:#8a2750;--tint:#f8e8ef;--borderTint:#efd1df}
+    .game.second{--accent:#1b868e;--tint:#e8f6f5;--borderTint:#d1ecea}
+    .game.third{--accent:#c35f32;--tint:#fff0e7;--borderTint:#f7dfd1}
+    .game.fourth{--accent:#8560a4;--tint:#f2ecf8;--borderTint:#e4d6f0}
+    .game.fifth{--accent:#a6791f;--tint:#fff5df;--borderTint:#f4e5c0}
+
+    /* رمز QR الخاص بكل لعبة - مضمّن داخل ملف HTML ليعمل دون صور إضافية */
+    .qr-panel{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:8px;margin-top:14px;padding:15px 12px 14px;
+      border:1.5px dashed var(--borderTint);border-radius:19px;
+      background:linear-gradient(145deg,#ffffff,var(--tint));
+    }
+    .qr-image{
+      width:146px;height:146px;max-width:100%;display:block;object-fit:contain;
+      padding:7px;border-radius:13px;background:#fff;
+      box-shadow:0 5px 13px rgba(60,31,47,.09);
+      image-rendering:pixelated;
+    }
+    .qr-label{margin:0;color:var(--wine);font-size:14px;font-weight:800;text-align:center}
+    .qr-caption{font-size:12px;color:var(--muted);text-align:center;line-height:1.65}
+    @media(max-width:620px){.qr-image{width:160px;height:160px}}
+    .bottom{background:#fff;border:1.5px solid var(--stroke);box-shadow:var(--shadow);border-radius:24px;padding:19px 23px;margin:11px auto 23px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .bottom strong{display:block;font-size:18px;color:var(--wine);margin-bottom:5px}
+    .bottom p{margin:0;color:#735767;line-height:1.85}
+    .copy{border:2px solid var(--wine);background:#fff;color:var(--wine);padding:12px 18px;border-radius:13px;font:800 14px Tahoma,"Segoe UI",sans-serif;cursor:pointer}
+    .copy:hover{background:var(--pink)}
+    .footer{text-align:center;color:#846776;font-size:13px;padding:1px 0 29px}
+    @media(min-width:850px){.game:nth-child(4){grid-column:1 / span 1}.games{justify-content:center}}
+    @media(max-width:980px){.games{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){
+      .masthead{padding-top:13px}.hero{padding:30px 13px;border-radius:24px}.hero h1{font-size:34px}
+      .games{grid-template-columns:1fr;gap:14px}.intro{padding:25px 10px 19px}
+      .game{padding:19px 18px 18px;border-radius:22px}.symbol{width:63px;height:63px;flex-basis:63px;font-size:32px}
+      .bottom{padding:19px 17px}.copy{width:100%}.hero-foot{gap:7px}.hero-foot span{font-size:12px;padding:7px 10px}
+    }
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="masthead">
+      <div class="hero">
+        <div class="eyebrow">✦ اللغة العربية ✦ تعلّم باللعب ✦</div>
+        <h1>🌟 عالم الأفعال الخمسة 🌟</h1>
+        <p>خمس ألعاب تفاعلية في مكانٍ واحد! اختاري التحدّي، واكتشفي القاعدة، واجمعي النجوم، وتعلّمي بطريقة ممتعة.</p>
+        <div class="hero-foot"><span>🎮 ٥ تحديات</span><span>📱 للهواتف والأجهزة</span><span>🔗 رابط واحد للجميع</span></div>
+      </div>
+    </header>
+    <section class="intro" aria-labelledby="select-title">
+      <h2 id="select-title">اختاري لعبتكِ وابدئي المغامرة!</h2>
+      <p>اضغطي على «العبِي الآن»، أو امسحي رمز QR الموجود تحت كل سؤال لفتح لعبته مباشرةً.</p>
+    </section>
+    <section class="games" aria-label="الألعاب التفاعلية الخمس">
+      <article class="game first">
+        <div class="game-head"><div class="symbol" aria-hidden="true">🧠</div><div><span class="number">المحطة ٠١</span><h3>فعل واحد... خمس صور!</h3></div></div>
+        <p>تهيئة سريعة: تذكّري، فكّري مع زميلتكِ، ثم اكتشفي عنوان الدرس بنفسكِ.</p>
+        <span class="kind">✨ تهيئة واستنتاج</span>
+        <a class="play" href="https://mmantle1991-cpu.github.io/five-verbs-game/index.html" target="_blank" rel="noopener" aria-label="العبِي الآن: فعل واحد خمس صور"><span>العبِي الآن</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+        <div class="qr-panel" aria-label="رمز QR لفتح اللعبة رقم 1">
+          <img class="qr-image" src="data:image/png;base64,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" alt="رمز QR لفتح اللعبة رقم 1" width="146" height="146" loading="eager">
+          <span class="qr-label">📱 امسحي الرمز للعب</span>
+          <span class="qr-caption">أو اضغطي على زر «العبِي الآن» أعلاه</span>
+        </div>
+      </article>
+      <article class="game second">
+        <div class="game-head"><div class="symbol" aria-hidden="true">🔐</div><div><span class="number">المحطة ٠٢</span><h3>خزنة الأفعال الخمسة</h3></div></div>
+        <p>افتحي الأقفال اللغوية، وطابقي الصيغ، وتوصّلي إلى تعريف الأفعال الخمسة.</p>
+        <span class="kind">🗝️ اكتشاف القاعدة</span>
+        <a class="play" href="https://mmantle1991-cpu.github.io/five-verbs-game/discover.html" target="_blank" rel="noopener" aria-label="العبِي الآن: خزنة الأفعال الخمسة"><span>العبِي الآن</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+        <div class="qr-panel" aria-label="رمز QR لفتح اللعبة رقم 2">
+          <img class="qr-image" src="data:image/png;base64,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" alt="رمز QR لفتح اللعبة رقم 2" width="146" height="146" loading="eager">
+          <span class="qr-label">📱 امسحي الرمز للعب</span>
+          <span class="qr-caption">أو اضغطي على زر «العبِي الآن» أعلاه</span>
+        </div>
+      </article>
+      <article class="game third">
+        <div class="game-head"><div class="symbol" aria-hidden="true">🧺</div><div><span class="number">المحطة ٠٣</span><h3>أصدقاء الفعل المضارع</h3></div></div>
+        <p>اجمعي البطاقات المتساقطة وضعي أدوات النصب والجزم في السلة المناسبة.</p>
+        <span class="kind">🎯 تصنيف وجمع</span>
+        <a class="play" href="https://mmantle1991-cpu.github.io/five-verbs-game/friends.html" target="_blank" rel="noopener" aria-label="العبِي الآن: أصدقاء الفعل المضارع"><span>العبِي الآن</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+        <div class="qr-panel" aria-label="رمز QR لفتح اللعبة رقم 3">
+          <img class="qr-image" src="data:image/png;base64,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" alt="رمز QR لفتح اللعبة رقم 3" width="146" height="146" loading="eager">
+          <span class="qr-label">📱 امسحي الرمز للعب</span>
+          <span class="qr-caption">أو اضغطي على زر «العبِي الآن» أعلاه</span>
+        </div>
+      </article>
+      <article class="game fourth">
+        <div class="game-head"><div class="symbol" aria-hidden="true">🔗</div><div><span class="number">المحطة ٠٤</span><h3>تحدّي التوصيل</h3></div></div>
+        <p>وصّلي بين صيغ الأفعال الخمسة وما يقابلها، وبين حالات الإعراب وعلاماتها.</p>
+        <span class="kind">🪢 توصيل تفاعلي</span>
+        <!-- Exact filename in the user's GitHub screenshot includes a space and parentheses. -->
+        <a class="play" href="https://mmantle1991-cpu.github.io/five-verbs-game/connect%20%281%29.html" target="_blank" rel="noopener" aria-label="العبِي الآن: تحدي التوصيل"><span>العبِي الآن</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+        <div class="qr-panel" aria-label="رمز QR لفتح اللعبة رقم 4">
+          <img class="qr-image" src="data:image/png;base64,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" alt="رمز QR لفتح اللعبة رقم 4" width="146" height="146" loading="eager">
+          <span class="qr-label">📱 امسحي الرمز للعب</span>
+          <span class="qr-caption">أو اضغطي على زر «العبِي الآن» أعلاه</span>
+        </div>
+      </article>
+      <article class="game fifth">
+        <div class="game-head"><div class="symbol" aria-hidden="true">🏎️</div><div><span class="number">المحطة ٠٥</span><h3>سباق السيارة</h3></div></div>
+        <p>قودي السيارة نحو المسار الصحيح قبل انتهاء الوقت! لديكِ عشر ثوانٍ فقط.</p>
+        <span class="kind">⏳ تحدّي ١٠ ثوانٍ</span>
+        <a class="play" href="https://mmantle1991-cpu.github.io/five-verbs-game/car_game.html" target="_blank" rel="noopener" aria-label="العبِي الآن: سباق السيارة"><span>العبِي الآن</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+        <div class="qr-panel" aria-label="رمز QR لفتح اللعبة رقم 5">
+          <img class="qr-image" src="data:image/png;base64,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" alt="رمز QR لفتح اللعبة رقم 5" width="146" height="146" loading="eager">
+          <span class="qr-label">📱 امسحي الرمز للعب</span>
+          <span class="qr-caption">أو اضغطي على زر «العبِي الآن» أعلاه</span>
+        </div>
+      </article>
+    </section>
+    <aside class="bottom">
+      <div><strong>📣 شاركي الصفحة مع طالباتكِ</strong><p>رابط واحد يجمع جميع الألعاب. يمكنكِ وضعه في رمز QR على الشريحة أو مشاركته مباشرة.</p></div>
+      <button class="copy" id="copyBtn" type="button">📋 نسخ رابط الصفحة</button>
+    </aside>
+    <footer class="footer">صُممت هذه المساحة للتعلّم النشط في درس الأفعال الخمسة 🌷</footer>
+  </main>
+  <script>
+    document.getElementById('copyBtn').addEventListener('click', async function(){
+      var url = location.protocol === 'file:' ? 'https://mmantle1991-cpu.github.io/five-verbs-game/hub.html' : location.href;
+      try { await navigator.clipboard.writeText(url); this.textContent = '✓ تم نسخ الرابط'; }
+      catch (e) {
+        var field = document.createElement('textarea');field.value=url;document.body.appendChild(field);field.select();
+        try {document.execCommand('copy');this.textContent='✓ تم نسخ الرابط';}catch(e2){window.prompt('انسخي الرابط:',url)}
+        field.remove();
+      }
+      var btn=this;setTimeout(function(){btn.textContent='📋 نسخ رابط الصفحة'},2200);
+    });
+  </script>
+</body>
+</html>
